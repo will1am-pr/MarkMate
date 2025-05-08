@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.markmate.R
 import com.example.markmate.navigation.ROUT_LOGIN
+import com.example.markmate.navigation.ROUT_REQUESTLEAVE
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -25,7 +26,7 @@ fun DashboardScreen(navController: NavController) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text("📋 MarkMate Dashboard", fontWeight = FontWeight.SemiBold)
+                    Text("📋 Student Dashboard", fontWeight = FontWeight.SemiBold, color = Color.White)
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary
@@ -48,11 +49,8 @@ fun DashboardScreen(navController: NavController) {
             )
 
             val dashboardOptions = listOf(
-                DashboardItem("View Attendance Records", "Admin", "attendance", R.drawable.view),
-                DashboardItem("Add Student", "Admin", "addStudent", R.drawable.addstudent),
-                DashboardItem("Manage Classes", "Admin", "classes", R.drawable.manageclasses),
                 DashboardItem("View My Attendance", "Student", "myAttendance", R.drawable.view),
-                DashboardItem("Request Leave", "Student", "leaveRequest", R.drawable.request),
+                DashboardItem("Request Leave", "Student", ROUT_REQUESTLEAVE, R.drawable.request),
                 DashboardItem("Update Profile", "Student", "profile", R.drawable.update)
             )
 
@@ -60,20 +58,23 @@ fun DashboardScreen(navController: NavController) {
                 val cardColor = if (item.role == "Admin") {
                     MaterialTheme.colorScheme.primaryContainer
                 } else {
-                    MaterialTheme.colorScheme.secondaryContainer // fallback if you don’t have tertiaryContainer
+                    MaterialTheme.colorScheme.secondaryContainer
                 }
 
                 DashboardCard(
                     title = "${item.title} [${item.role}]",
                     icon = item.icon,
                     backgroundColor = cardColor,
-                    onClick = { navController.navigate(ROUT_LOGIN) }  // Navigation action
+                    onClick = {
+                        navController.navigate(item.route)  // ✅ Dynamic navigation
+                    }
                 )
                 Spacer(modifier = Modifier.height(12.dp))
             }
         }
     }
 }
+
 
 data class DashboardItem(
     val title: String,

@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.markmate.navigation.ROUT_ADDSTUDENT
+import com.example.markmate.navigation.ROUT_REQUESTLEAVE
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -75,6 +76,14 @@ fun AdminDashboardScreen(navController: NavController) {
                 backgroundColor = MaterialTheme.colorScheme.primaryContainer
             ) {
                 navController.navigate("attendance")
+            }
+
+            AdminDashboardCard(
+                title = "📈 View Leave Requests",
+                icon = Icons.Default.List,
+                backgroundColor = MaterialTheme.colorScheme.primaryContainer
+            ) {
+                navController.navigate(ROUT_REQUESTLEAVE)
             }
         }
     }

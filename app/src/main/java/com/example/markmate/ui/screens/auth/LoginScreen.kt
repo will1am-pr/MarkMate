@@ -31,6 +31,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.markmate.R
 import com.example.markmate.navigation.ROUT_ABOUT
 import com.example.markmate.navigation.ROUT_ADMINDASHBOARD
+import com.example.markmate.navigation.ROUT_DASHBOARD
 import com.example.markmate.navigation.ROUT_HOME
 import com.example.markmate.navigation.ROUT_REGISTER
 import com.example.markmate.ui.screens.about.AboutScreen
@@ -54,11 +55,11 @@ fun LoginScreen(
             if (user == null) {
                 Toast.makeText(context, "Invalid Credentials", Toast.LENGTH_SHORT).show()
             } else {
-                if (user.role == "admin") {
+                if (user.role == "Admin") {
                     navController.navigate(ROUT_ADMINDASHBOARD) {
                     }
                 } else {
-                    navController.navigate(ROUT_ABOUT) {
+                    navController.navigate(ROUT_DASHBOARD) {
                     }
                 }
             }
