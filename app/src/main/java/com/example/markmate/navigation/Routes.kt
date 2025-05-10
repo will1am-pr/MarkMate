@@ -10,6 +10,9 @@ const val ROUT_ADDSTUDENT = "addstudent"
 const val ROUT_MANAGECLASSES = "manageclasses"
 const val ROUT_VIEWATTENDANCE = "viewattendance"
 const val ROUT_VIEWMYATTENDANCE = "viewmyattendance"
+const val ROUT_VIEWLEAVREQUESTS = "viewleaverequests"
+
+//Leave
 const val ROUT_REQUESTLEAVE = "requestleave"
 
 //Authentication

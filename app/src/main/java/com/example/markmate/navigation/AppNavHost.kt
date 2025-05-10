@@ -12,21 +12,21 @@ import androidx.navigation.compose.rememberNavController
 import com.example.markmate.data.UserDatabase
 import com.example.markmate.repository.UserRepository
 import com.example.markmate.ui.screens.about.AboutScreen
+import com.example.markmate.ui.screens.about.LeaveSystemScreen
 import com.example.markmate.ui.screens.admin.AddStudentScreen
 import com.example.markmate.ui.screens.admin.AdminDashboardScreen
 import com.example.markmate.ui.screens.admin.ManageClassesScreen
 import com.example.markmate.ui.screens.admin.ViewAttendanceScreen
+import com.example.markmate.ui.screens.admin.ViewLeaveRequestsScreen
 import com.example.markmate.ui.screens.home.HomeScreen
 import com.example.markmate.viewmodel.AuthViewModel
 import com.example.markmate.ui.screens.contact.ContactScreen
 import com.example.markmate.ui.screens.splash.SplashScreen
 import com.example.markmate.ui.screens.auth.LoginScreen
 import com.example.markmate.ui.screens.dashboard.DashboardScreen
-import com.example.markmate.ui.screens.user.RequestLeaveScreen
 import com.example.markmate.ui.screens.user.ViewMyAttendanceScreen
 
 
-@SuppressLint("ComposableDestinationInComposeScope", "ViewModelConstructorInComposable")
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
@@ -72,31 +72,34 @@ fun AppNavHost(
             ViewMyAttendanceScreen(navController)
         }
         composable(ROUT_REQUESTLEAVE) {
-            RequestLeaveScreen(navController)
+            LeaveSystemScreen(navController)
+        }
+        composable(ROUT_VIEWLEAVREQUESTS) {
+            ViewLeaveRequestsScreen(navController)
         }
 
 
 
-            //AUTHENTICATION
+        //AUTHENTICATION
 
-            // Initialize Room Database and Repository for Authentication
-            val appDatabase = UserDatabase.getDatabase(context)
-            val authRepository = UserRepository(appDatabase.userDao())
-            val authViewModel: AuthViewModel = AuthViewModel(authRepository)
-            composable(ROUT_REGISTER) {
-                RegisterScreen(authViewModel, navController) {
-                    navController.navigate(ROUT_LOGIN) {
-                        popUpTo(ROUT_REGISTER) { inclusive = true }
-                    }
+        // Initialize Room Database and Repository for Authentication
+        val appDatabase = UserDatabase.getDatabase(context)
+        val authRepository = UserRepository(appDatabase.userDao())
+        val authViewModel: AuthViewModel = AuthViewModel(authRepository)
+        composable(ROUT_REGISTER) {
+            RegisterScreen(authViewModel, navController) {
+                navController.navigate(ROUT_LOGIN) {
+                    popUpTo(ROUT_REGISTER) { inclusive = true }
                 }
             }
+        }
 
-            composable(ROUT_LOGIN) {
-                LoginScreen(authViewModel, navController) {
-                    navController.navigate(ROUT_HOME) {
-                        popUpTo(ROUT_LOGIN) { inclusive = true }
-                    }
+        composable(ROUT_LOGIN) {
+            LoginScreen(authViewModel, navController) {
+                navController.navigate(ROUT_HOME) {
+                    popUpTo(ROUT_LOGIN) { inclusive = true }
                 }
             }
         }
     }
+}

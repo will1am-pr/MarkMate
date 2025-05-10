@@ -1,11 +1,10 @@
-package com.example.markmate.ui.screens.user
+package com.example.markmate.ui.screens.about
 
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -38,24 +37,23 @@ data class LeaveRequest(
 @SuppressLint("NewApi")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RequestLeaveScreen(
+fun LeaveSystemScreen(
     navController: NavController,
-    Admin: Boolean = false,
-    currentUserId: String = ""
+    isAdmin: Boolean = false,
+    currentUserId: String = "user123"
 ) {
     val today = LocalDate.now()
+    val dayOfWeek = today.dayOfWeek
     val context = LocalContext.current
-    var selectedIndex by remember { mutableStateOf(1) }
-
-    // Shared list of leave requests (mocked as in-memory store)
-    val leaveRequests = remember { mutableStateListOf<LeaveRequest>() }
 
     var leaveReason by remember { mutableStateOf("") }
+    val leaveRequests = remember { mutableStateListOf<LeaveRequest>() }
+    var selectedIndex by remember { mutableStateOf(1) }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (Admin) "Admin Panel" else "Request Leave") },
+                title = { Text(if (isAdmin) "Leave Management" else "Request Leave") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
@@ -97,9 +95,8 @@ fun RequestLeaveScreen(
                     .padding(paddingValues)
                     .padding(16.dp)
             ) {
-                if (Admin) {
+                if (isAdmin) {
                     Text("📋 All Leave Requests", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-
                     if (leaveRequests.isEmpty()) {
                         Text("No leave requests submitted yet.", color = Color.Gray)
                     } else {
@@ -140,14 +137,10 @@ fun RequestLeaveScreen(
                         }
                     }
                 } else {
-                    // Student/User View
-                    val dayOfWeek = today.dayOfWeek
                     Text(
-                        text = "Date: $today (${dayOfWeek.name.lowercase().replaceFirstChar { it.uppercase() }})",
+                        "Date: $today (${dayOfWeek.name.lowercase().replaceFirstChar { it.uppercase() }})",
                         fontWeight = FontWeight.SemiBold
                     )
-
-                    Spacer(modifier = Modifier.height(12.dp))
 
                     Spacer(modifier = Modifier.height(12.dp))
 
@@ -158,7 +151,7 @@ fun RequestLeaveScreen(
                         modifier = Modifier.fillMaxWidth()
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     Button(
                         onClick = {
@@ -175,15 +168,12 @@ fun RequestLeaveScreen(
                         colors = ButtonDefaults.buttonColors(containerColor = Blue),
                         modifier = Modifier.fillMaxWidth()
                     ) {
-                        Text("Submit Request", color = Color.White)
+                        Text("Submit Leave Request", color = Color.White)
                     }
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-
-                    Divider(modifier = Modifier.padding(vertical = 12.dp))
-
-                    Text("📜 Your Leave Requests", fontWeight = FontWeight.SemiBold)
+                    Text("🗓️ Your Leave Requests", fontWeight = FontWeight.SemiBold)
 
                     val userRequests = leaveRequests.filter { it.userId == currentUserId }
 
@@ -191,7 +181,7 @@ fun RequestLeaveScreen(
                         Text("No leave requests found.", color = Color.Gray)
                     } else {
                         LazyColumn(modifier = Modifier.fillMaxHeight(0.5f)) {
-                            items(userRequests) { request ->
+                            itemsIndexed(userRequests) { _, request ->
                                 Card(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -214,12 +204,6 @@ fun RequestLeaveScreen(
 
 @Preview(showBackground = true)
 @Composable
-fun RequestLeaveScreenUserPreview() {
-    RequestLeaveScreen(navController = rememberNavController(), Admin = false)
-}
-
-@Preview(showBackground = true)
-@Composable
-fun RequestLeaveScreenAdminPreview() {
-    RequestLeaveScreen(navController = rememberNavController(), Admin = true)
+fun LeaveSystemScreenPreview() {
+    LeaveSystemScreen(navController = rememberNavController())
 }
