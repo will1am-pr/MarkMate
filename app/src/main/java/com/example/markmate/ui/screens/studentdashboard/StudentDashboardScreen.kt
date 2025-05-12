@@ -1,4 +1,4 @@
-package com.example.markmate.ui.screens.dashboard
+package com.example.markmate.ui.screens.studentdashboard
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,12 +16,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.markmate.R
-import com.example.markmate.navigation.ROUT_LOGIN
 import com.example.markmate.navigation.ROUT_REQUESTLEAVE
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DashboardScreen(navController: NavController) {
+fun StudentDashboardScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
@@ -122,6 +121,6 @@ fun DashboardCard(
 
 @Preview(showBackground = true)
 @Composable
-fun DashboardPreview() {
-    DashboardScreen(navController = rememberNavController())
+fun StudentDashboardPreview() {
+    StudentDashboardScreen(navController = rememberNavController())
 }

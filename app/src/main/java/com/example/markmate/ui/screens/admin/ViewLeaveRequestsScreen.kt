@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.example.markmate.navigation.ROUT_VIEWLEAVREQUESTS
+import com.example.markmate.navigation.ROUT_VIEWLEAVEREQUESTS
 import com.example.markmate.ui.theme.Blue
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -69,7 +69,7 @@ fun ViewLeaveRequestsScreen(navController: NavController) {
                     icon = { Icon(Icons.Default.Home, contentDescription = null) },
                     label = { Text("Dashboard") },
                     selected = false,
-                    onClick = { navController.navigate(ROUT_VIEWLEAVREQUESTS) }
+                    onClick = { navController.navigate(ROUT_VIEWLEAVEREQUESTS) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.List, contentDescription = null) },

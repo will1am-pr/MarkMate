@@ -1,7 +1,8 @@
 package com.example.markmate.navigation
 
 import RegisterScreen
-import android.annotation.SuppressLint
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -23,10 +24,12 @@ import com.example.markmate.viewmodel.AuthViewModel
 import com.example.markmate.ui.screens.contact.ContactScreen
 import com.example.markmate.ui.screens.splash.SplashScreen
 import com.example.markmate.ui.screens.auth.LoginScreen
-import com.example.markmate.ui.screens.dashboard.DashboardScreen
+import com.example.markmate.ui.screens.studentdashboard.StudentDashboardScreen
+import com.example.markmate.ui.screens.user.UpdateProfileScreen
 import com.example.markmate.ui.screens.user.ViewMyAttendanceScreen
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun AppNavHost(
     modifier: Modifier = Modifier,
@@ -53,8 +56,8 @@ fun AppNavHost(
         composable(ROUT_SPLASH) {
             SplashScreen(navController)
         }
-        composable(ROUT_DASHBOARD) {
-            DashboardScreen(navController)
+        composable(ROUT_STUDENTDASHBOARD) {
+            StudentDashboardScreen(navController)
         }
         composable(ROUT_ADMINDASHBOARD) {
             AdminDashboardScreen(navController)
@@ -74,8 +77,11 @@ fun AppNavHost(
         composable(ROUT_REQUESTLEAVE) {
             LeaveSystemScreen(navController)
         }
-        composable(ROUT_VIEWLEAVREQUESTS) {
+        composable(ROUT_VIEWLEAVEREQUESTS) {
             ViewLeaveRequestsScreen(navController)
+        }
+        composable(ROUT_UPDATEPROFILE) {
+            UpdateProfileScreen(navController)
         }
 
 

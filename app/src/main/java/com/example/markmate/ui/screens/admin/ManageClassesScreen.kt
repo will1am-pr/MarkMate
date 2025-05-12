@@ -4,6 +4,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,78 +29,107 @@ fun ManageClassesScreen(navController: NavController) {
     var classDuration by remember { mutableStateOf(2) }
     var customNote by remember { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(Color(0xFFEFF3F8))
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text(
-            text = "Manage Classes",
-            fontSize = 24.sp,
-            fontWeight = FontWeight.Bold,
-            color = Color(0xFF003366)
-        )
-
-        // Course Selector
-        DropdownMenuWithLabel(
-            label = "Select Course",
-            items = courses,
-            selectedItem = selectedCourse,
-            onItemSelected = { selectedCourse = it }
-        )
-
-        // Duration Selector
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text("Duration (hrs):", fontSize = 16.sp)
-            Spacer(modifier = Modifier.width(8.dp))
-            Slider(
-                value = classDuration.toFloat(),
-                onValueChange = { classDuration = it.toInt().coerceAtLeast(2) },
-                valueRange = 2f..8f,
-                steps = 6,
-                modifier = Modifier.weight(1f)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("$classDuration hrs", fontWeight = FontWeight.Medium)
+    Scaffold(
+        bottomBar = {
+            NavigationBar(
+                containerColor = Color(0xFF003366)
+            ) {
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Person, contentDescription = "Add Student") },
+                    label = { Text("Add") },
+                    selected = false,
+                    onClick = { navController.navigate("add_student") }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Manage Classes") },
+                    label = { Text("Classes") },
+                    selected = true,
+                    onClick = { /* Already here */ }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.List, contentDescription = "Attendance") },
+                    label = { Text("Attendance") },
+                    selected = false,
+                    onClick = { navController.navigate("view_attendance") }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.List, contentDescription = "Leave") },
+                    label = { Text("Leave") },
+                    selected = false,
+                    onClick = { navController.navigate("view_leave_requests") }
+                )
+            }
         }
-
-        // Notes or Plan
-        OutlinedTextField(
-            value = customNote,
-            onValueChange = { customNote = it },
-            label = { Text("Add notes or plan for the class") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        // Submit Button
-        Button(
-            onClick = {
-                // Logic to save class configuration (could call a ViewModel function here)
-            },
-            modifier = Modifier.fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0033CC))
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .padding(padding)
+                .fillMaxSize()
+                .background(Color(0xFFEFF3F8))
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text("Schedule Class", color = Color.White)
-        }
+            Text(
+                text = "Manage Classes",
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF003366)
+            )
 
-        // Upcoming (Optional list of entries for preview)
-        Spacer(modifier = Modifier.height(16.dp))
-        Text("Scheduled Classes (Preview):", fontWeight = FontWeight.SemiBold)
-        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-            items(courses) { course ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 4.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color.White)
-                ) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Text(course, fontWeight = FontWeight.Bold)
-                        Text("Duration: $classDuration hrs")
-                        if (customNote.isNotBlank()) Text("Note: $customNote")
+            DropdownMenuWithLabel(
+                label = "Select Course",
+                items = courses,
+                selectedItem = selectedCourse,
+                onItemSelected = { selectedCourse = it }
+            )
+
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text("Duration (hrs):", fontSize = 16.sp)
+                Spacer(modifier = Modifier.width(8.dp))
+                Slider(
+                    value = classDuration.toFloat(),
+                    onValueChange = { classDuration = it.toInt().coerceAtLeast(2) },
+                    valueRange = 2f..8f,
+                    steps = 6,
+                    modifier = Modifier.weight(1f)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("$classDuration hrs", fontWeight = FontWeight.Medium)
+            }
+
+            OutlinedTextField(
+                value = customNote,
+                onValueChange = { customNote = it },
+                label = { Text("Add notes or plan for the class") },
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Button(
+                onClick = {
+                    // Save logic
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF0033CC))
+            ) {
+                Text("Schedule Class", color = Color.White)
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            Text("Scheduled Classes (Preview):", fontWeight = FontWeight.SemiBold)
+            LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                items(courses) { course ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 4.dp),
+                        colors = CardDefaults.cardColors(containerColor = Color.White)
+                    ) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Text(course, fontWeight = FontWeight.Bold)
+                            Text("Duration: $classDuration hrs")
+                            if (customNote.isNotBlank()) Text("Note: $customNote")
+                        }
                     }
                 }
             }

@@ -19,7 +19,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.markmate.navigation.ROUT_ADDSTUDENT
+import com.example.markmate.navigation.ROUT_MANAGECLASSES
 import com.example.markmate.navigation.ROUT_REQUESTLEAVE
+import com.example.markmate.navigation.ROUT_VIEWATTENDANCE
+import com.example.markmate.navigation.ROUT_VIEWLEAVEREQUESTS
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,6 +41,36 @@ fun AdminDashboardScreen(navController: NavController) {
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             )
+        },
+        bottomBar = {
+            NavigationBar(
+                containerColor = MaterialTheme.colorScheme.primary
+            ) {
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Person, contentDescription = "Add Student") },
+                    label = { Text("Add") },
+                    selected = false,
+                    onClick = { navController.navigate(ROUT_ADDSTUDENT) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.Info, contentDescription = "Manage Classes") },
+                    label = { Text("Classes") },
+                    selected = false,
+                    onClick = { navController.navigate(ROUT_MANAGECLASSES) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.List, contentDescription = "Attendance") },
+                    label = { Text("Attendance") },
+                    selected = false,
+                    onClick = { navController.navigate(ROUT_VIEWATTENDANCE) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(Icons.Default.List, contentDescription = "Leave") },
+                    label = { Text("Leave") },
+                    selected = true,
+                    onClick = { navController.navigate(ROUT_VIEWLEAVEREQUESTS) }
+                )
+            }
         }
     ) { padding ->
         Column(
@@ -67,7 +100,7 @@ fun AdminDashboardScreen(navController: NavController) {
                 icon = Icons.Default.Info,
                 backgroundColor = MaterialTheme.colorScheme.tertiaryContainer
             ) {
-                navController.navigate("classes")
+                navController.navigate(ROUT_MANAGECLASSES)
             }
 
             AdminDashboardCard(
@@ -75,7 +108,7 @@ fun AdminDashboardScreen(navController: NavController) {
                 icon = Icons.Default.List,
                 backgroundColor = MaterialTheme.colorScheme.primaryContainer
             ) {
-                navController.navigate("attendance")
+                navController.navigate(ROUT_VIEWATTENDANCE)
             }
 
             AdminDashboardCard(
@@ -83,7 +116,7 @@ fun AdminDashboardScreen(navController: NavController) {
                 icon = Icons.Default.List,
                 backgroundColor = MaterialTheme.colorScheme.primaryContainer
             ) {
-                navController.navigate(ROUT_REQUESTLEAVE)
+                navController.navigate(ROUT_VIEWLEAVEREQUESTS)
             }
         }
     }
