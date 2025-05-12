@@ -60,12 +60,12 @@ fun SplashScreen(navController: NavController) {
 
             // Image with fixed height to preserve visibility
             Image(
-                painter = painterResource(id = R.drawable.atttendance),
+                painter = painterResource(id = R.drawable.attendance),
                 contentDescription = "Attendance Image",
                 contentScale = ContentScale.Fit,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(320.dp) // You can adjust this based on your image size
+                    .height(700.dp) // You can adjust this based on your image size
                     .padding(vertical = 16.dp)
             )
 

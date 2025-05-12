@@ -19,6 +19,10 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.markmate.navigation.ROUT_ADDSTUDENT
+import com.example.markmate.navigation.ROUT_MANAGECLASSES
+import com.example.markmate.navigation.ROUT_VIEWATTENDANCE
+import com.example.markmate.navigation.ROUT_VIEWLEAVEREQUESTS
 
 // Sample course list
 val courses = listOf("Full-stack MIT Software Development", "Cybersecurity", "Data Science")
@@ -38,11 +42,11 @@ fun ManageClassesScreen(navController: NavController) {
                     icon = { Icon(Icons.Default.Person, contentDescription = "Add Student") },
                     label = { Text("Add") },
                     selected = false,
-                    onClick = { navController.navigate("add_student") }
+                    onClick = { navController.navigate(ROUT_ADDSTUDENT) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Info, contentDescription = "Manage Classes") },
-                    label = { Text("Classes") },
+                    label = { Text(ROUT_MANAGECLASSES) },
                     selected = true,
                     onClick = { /* Already here */ }
                 )
@@ -50,13 +54,13 @@ fun ManageClassesScreen(navController: NavController) {
                     icon = { Icon(Icons.Default.List, contentDescription = "Attendance") },
                     label = { Text("Attendance") },
                     selected = false,
-                    onClick = { navController.navigate("view_attendance") }
+                    onClick = { navController.navigate(ROUT_VIEWATTENDANCE) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.List, contentDescription = "Leave") },
                     label = { Text("Leave") },
                     selected = false,
-                    onClick = { navController.navigate("view_leave_requests") }
+                    onClick = { navController.navigate(ROUT_VIEWLEAVEREQUESTS) }
                 )
             }
         }

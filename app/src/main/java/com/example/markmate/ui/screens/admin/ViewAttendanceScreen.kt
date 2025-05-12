@@ -19,6 +19,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.markmate.navigation.ROUT_ADDSTUDENT
+import com.example.markmate.navigation.ROUT_VIEWATTENDANCE
+import com.example.markmate.navigation.ROUT_VIEWLEAVEREQUESTS
 
 // Mock data structure
 val studentAttendanceData = mapOf(
@@ -36,13 +39,13 @@ fun ViewAttendanceScreen(navController: NavController) {
                     icon = { Icon(Icons.Default.Person, contentDescription = "Add Student") },
                     label = { Text("Add") },
                     selected = false,
-                    onClick = { navController.navigate("add_student") }
+                    onClick = { navController.navigate(ROUT_ADDSTUDENT) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.Info, contentDescription = "Manage Classes") },
                     label = { Text("Classes") },
                     selected = false,
-                    onClick = { navController.navigate("manage_classes") }
+                    onClick = { navController.navigate(ROUT_VIEWATTENDANCE) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Default.List, contentDescription = "Attendance") },
@@ -54,7 +57,7 @@ fun ViewAttendanceScreen(navController: NavController) {
                     icon = { Icon(Icons.Default.List, contentDescription = "Leave Requests") },
                     label = { Text("Leave") },
                     selected = false,
-                    onClick = { navController.navigate("view_leave_requests") }
+                    onClick = { navController.navigate(ROUT_VIEWLEAVEREQUESTS) }
                 )
             }
         }

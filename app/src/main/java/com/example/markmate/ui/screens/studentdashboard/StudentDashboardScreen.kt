@@ -17,6 +17,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.markmate.R
 import com.example.markmate.navigation.ROUT_REQUESTLEAVE
+import com.example.markmate.navigation.ROUT_UPDATEPROFILE
+import com.example.markmate.navigation.ROUT_VIEWMYATTENDANCE
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,6 +33,28 @@ fun StudentDashboardScreen(navController: NavController) {
                     containerColor = MaterialTheme.colorScheme.primary
                 )
             )
+        },
+        bottomBar = {
+            NavigationBar(containerColor = Color(0xFF522C98)) {
+                NavigationBarItem(
+                    icon = { Icon(painterResource(id = R.drawable.visibility), contentDescription = "Attendance") },
+                    label = { Text("Attendance") },
+                    selected = false,
+                    onClick = { navController.navigate(ROUT_VIEWMYATTENDANCE) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(painterResource(id = R.drawable.request), contentDescription = "Leave") },
+                    label = { Text("Leave") },
+                    selected = false,
+                    onClick = { navController.navigate(ROUT_REQUESTLEAVE) }
+                )
+                NavigationBarItem(
+                    icon = { Icon(painterResource(id = R.drawable.update), contentDescription = "Profile") },
+                    label = { Text("Profile") },
+                    selected = false,
+                    onClick = { navController.navigate(ROUT_UPDATEPROFILE) } // replace with actual route
+                )
+            }
         }
     ) { padding ->
         Column(
@@ -48,7 +72,7 @@ fun StudentDashboardScreen(navController: NavController) {
             )
 
             val dashboardOptions = listOf(
-                DashboardItem("View My Attendance", "Student", "myAttendance", R.drawable.view),
+                DashboardItem("View My Attendance", "Student", ROUT_VIEWMYATTENDANCE, R.drawable.view),
                 DashboardItem("Request Leave", "Student", ROUT_REQUESTLEAVE, R.drawable.request),
                 DashboardItem("Update Profile", "Student", "profile", R.drawable.update)
             )
@@ -65,7 +89,7 @@ fun StudentDashboardScreen(navController: NavController) {
                     icon = item.icon,
                     backgroundColor = cardColor,
                     onClick = {
-                        navController.navigate(item.route)  // ✅ Dynamic navigation
+                        navController.navigate(item.route)
                     }
                 )
                 Spacer(modifier = Modifier.height(12.dp))
